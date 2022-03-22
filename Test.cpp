@@ -2,7 +2,6 @@
 #include "Direction.hpp"
 #include <string>
 #include "Notebook.hpp"
-#include <algorithm>
 
 TEST_CASE("good inputs"){
     ariel::Notebook tempBook;
@@ -50,6 +49,21 @@ TEST_CASE("good inputs"){
 
 TEST_CASE("bad inputs"){
     ariel::Notebook tempBook2;
+    // check negetive
+    CHECK_THROWS(tempBook2.write(0,0,-12,ariel::Direction::Horizontal,"ttt"));
+    CHECK_THROWS(tempBook2.write(0,-14,0,ariel::Direction::Horizontal,"tt"));
+    CHECK_THROWS(tempBook2.write(-51,0,0,ariel::Direction::Horizontal,"t"));
+
+    CHECK_THROWS(tempBook2.read(0,0,-15,ariel::Direction::Horizontal,18));
+    CHECK_THROWS(tempBook2.read(0,-41,0,ariel::Direction::Horizontal,10));
+    CHECK_THROWS(tempBook2.read(-31,0,0,ariel::Direction::Horizontal,1));
+    CHECK_THROWS(tempBook2.read(1,1,1,ariel::Direction::Horizontal,-21));
+
+    CHECK_THROWS(tempBook2.erase(0,0,-12,ariel::Direction::Horizontal,1));
+    CHECK_THROWS(tempBook2.erase(0,-13,0,ariel::Direction::Horizontal,2));
+    CHECK_THROWS(tempBook2.erase(-15,0,0,ariel::Direction::Horizontal,3));
+    CHECK_THROWS(tempBook2.erase(106,150,44,ariel::Direction::Horizontal,-1));
+
     //bad start colum
     CHECK_THROWS(tempBook2.write(0,0,101,ariel::Direction::Horizontal,"this is a to mach long input"));
     CHECK_THROWS(tempBook2.read(106,149,110,ariel::Direction::Horizontal,18));
